@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-package ru.sbt.jschool.session2;
+package ru.sbt.jschool.session2.oldSolution;
 
 import java.io.PrintStream;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -44,7 +43,7 @@ public class OutputFormatter {
         String s = new String();
         for (int i = 0; i < columns.length; i++) {
             s += "+";
-            s += repeatNTimes("-", columns[i].getMaxDataLength());
+            s += repeatNTimes("-", columns[i].getMaxDataLenght());
         }
         s += "+";
         return s;
@@ -55,9 +54,9 @@ public class OutputFormatter {
         String out = "|";
         for (int i = 0; i < columns.length; i++) {
             String title = columns[i].getTitle();
-            offset = (columns[i].getMaxDataLength() - title.length()) / 2;
+            offset = (columns[i].getMaxDataLenght() - title.length()) / 2;
             int nameOffset = title.length() + offset;
-            int sepOffset = 1 + columns[i].getMaxDataLength() - nameOffset;
+            int sepOffset = 1 + columns[i].getMaxDataLenght() - nameOffset;
             out += String.format("%" + nameOffset + "s%" + sepOffset + "s", title, '|');
         }
         return out;
@@ -74,19 +73,19 @@ public class OutputFormatter {
 
         if (data.length == 0) {
             for (int i = 0; i < width; i++) {
-                columns[i] = new ColumnFormatter(null);
+                columns[i] = new ColumnFormatter(ColumnFormatter.ColumnType.STRING);
                 columns[i].addTitle(names[i]);
             }
         } else {
             for (int i = 0; i < width; i++) {
                 if (data[0][i] instanceof Float || data[0][i] instanceof Double) {
-                    columns[i] = new ColumnFormatter(new MoneyFormatter());
+                    columns[i] = new ColumnFormatter(ColumnFormatter.ColumnType.MONEY);
                 } else if (data[0][i] instanceof Integer) {
-                    columns[i] = new ColumnFormatter(new NumberFormatter());
+                    columns[i] = new ColumnFormatter(ColumnFormatter.ColumnType.NUMBER);
                 } else if (data[0][i] instanceof Date) {
-                    columns[i] = new ColumnFormatter(new DateFormatter());
+                    columns[i] = new ColumnFormatter(ColumnFormatter.ColumnType.DATE);
                 } else {
-                    columns[i] = new ColumnFormatter(new StringFormatter());
+                    columns[i] = new ColumnFormatter(ColumnFormatter.ColumnType.STRING);
                 }
                 columns[i].addTitle(names[i]);
             }
@@ -108,10 +107,10 @@ public class OutputFormatter {
             out.print("|");
             for (int j = 0; j < width; j++) {
                 flag = "";
-                if (columns[j].getDataFormatter() instanceof StringFormatter) {
+                if (columns[j].getType() == ColumnFormatter.ColumnType.STRING) {
                     flag = "-";
                 }
-                out.printf("%" + flag + columns[j].getMaxDataLength() + "s|", columns[j].getElement(i));
+                out.printf("%" + flag + columns[j].getMaxDataLenght() + "s|", columns[j].getElement(i));
             }
             out.println('\n' + rowSeparator);
         }

@@ -1,45 +1,36 @@
 package ru.sbt.jschool.session2;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ColumnFormatter {
     private String title;
-    private OutputFormatter.ColumnType type;
-    private ArrayList<String> data = new ArrayList<>();;
-    private int maxDataLenght = 0;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");;
-    private DecimalFormatSymbols symbols = new DecimalFormatSymbols();;
-    private DecimalFormat moneyFormat;
-    private DecimalFormat numberFormat;
+    private Formatting dataFormatter;
+    private ArrayList<String> data = new ArrayList<>();
+    ;
+    private int maxDataLength = 0;
 
-    public ColumnFormatter(OutputFormatter.ColumnType type) {
-        symbols.setGroupingSeparator(' ');
-        symbols.setDecimalSeparator(',');
-        moneyFormat = new DecimalFormat("###,##0.00", symbols);
-        numberFormat = new DecimalFormat("###,###", symbols);;
-        this.type = type;
+    public ColumnFormatter(Formatting dataFormatter) {
+        this.dataFormatter = dataFormatter;
     }
 
-    public int getMaxDataLenght() {
-        return this.maxDataLenght;
+    public int getMaxDataLength() {
+        return this.maxDataLength;
     }
 
     public String getTitle() {
         return this.title;
     }
 
-
-    public OutputFormatter.ColumnType getType() {
-        return this.type;
+    public Formatting getDataFormatter() {
+        return this.dataFormatter;
     }
 
     public void addTitle(String title) {
         this.title = title;
-        if (title.length() > maxDataLenght) {
-            maxDataLenght = title.length();
+        if (title.length() > maxDataLength) {
+            maxDataLength = title.length();
         }
     }
 
@@ -48,39 +39,16 @@ public class ColumnFormatter {
     }
 
     public void addElement(Object element) {
-        switch (type) {
-            case DATE: {
-                data.add(dateFormat.format(element));
-                break;
-            }
-            case NUMBER: {
-                try {
-                    data.add(numberFormat.format(element));
-                } catch (Exception e) {
-                    data.add("-");
-                }
-                break;
-            }
-            case MONEY: {
-                try {
-                    data.add(moneyFormat.format(element));
-                } catch (Exception e) {
-                    data.add("-");
-                }
-                break;
-            }
-            case STRING: {
-                if (element == null) {
-                    data.add("-");
-                    break;
-                }
-                data.add(((String) element).replace('\n', ' '));
-            }
+        String formattedElement;
+        if (dataFormatter != null) {
+            formattedElement = dataFormatter.format(element);
+            data.add(formattedElement);
+        } else {
+            formattedElement = element.toString();
         }
 
-        if (data.get(data.size() - 1).length() > maxDataLenght) {
-            maxDataLenght = data.get(data.size() - 1).length();
+        if (formattedElement.length() > maxDataLength) {
+            maxDataLength = data.get(data.size() - 1).length();
         }
     }
-
 }
