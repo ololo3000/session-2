@@ -2,7 +2,7 @@ package ru.sbt.jschool.session2;
 
 public class CutStrFormatter implements Formatting {
 
-    int maxStrLen = 0;
+    int maxStrLen;
 
     public CutStrFormatter(int maxStrLen) {
         this.maxStrLen = maxStrLen;
@@ -17,7 +17,9 @@ public class CutStrFormatter implements Formatting {
             formattedObj = "-";
         }
         if (formattedObj.length() > maxStrLen) {
-            formattedObj = formattedObj.substring(0, maxStrLen - 3) + "...";
+
+            String substring = formattedObj.substring(0, maxStrLen - 3) + "...";
+            return substring;
         }
         return formattedObj;
     }

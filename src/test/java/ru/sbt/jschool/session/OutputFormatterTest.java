@@ -24,7 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import org.junit.Test;
-import ru.sbt.jschool.session2.oldSolution.OutputFormatter;
+import ru.sbt.jschool.session2.OutputFormatter;
 
 import static org.junit.Assert.assertEquals;
 

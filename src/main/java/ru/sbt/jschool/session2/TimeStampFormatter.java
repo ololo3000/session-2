@@ -2,7 +2,7 @@ package ru.sbt.jschool.session2;
 
 import java.text.SimpleDateFormat;
 
-public class TimeSampFormatter implements Formatting {
+public class TimeStampFormatter implements Formatting {
     private SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm.SS.sss");
 
     @Override
