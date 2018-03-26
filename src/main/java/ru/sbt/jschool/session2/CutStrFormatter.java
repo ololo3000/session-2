@@ -17,9 +17,7 @@ public class CutStrFormatter implements Formatting {
             formattedObj = "-";
         }
         if (formattedObj.length() > maxStrLen) {
-
-            String substring = formattedObj.substring(0, maxStrLen - 3) + "...";
-            return substring;
+            formattedObj =  formattedObj.substring(0, maxStrLen - 3) + "...";
         }
         return formattedObj;
     }

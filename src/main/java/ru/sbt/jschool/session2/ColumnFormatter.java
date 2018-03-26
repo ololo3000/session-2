@@ -1,8 +1,6 @@
 package ru.sbt.jschool.session2;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ColumnFormatter {
     private String title;
