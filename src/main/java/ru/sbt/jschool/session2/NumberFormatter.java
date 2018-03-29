@@ -14,12 +14,14 @@ public class NumberFormatter implements Formatting {
     }
 
     @Override
-    public String format(Object object) {
+    public String format(Object object) throws IllegalArgumentException {
         String formattedObj = "-";
         try {
             formattedObj = numberFormat.format(object);
         } catch (IllegalArgumentException e) {
-            //formattedObj = "-";
+            IllegalArgumentException se = new IllegalArgumentException("Format error");
+            se.initCause(e);
+            throw se;
         }
         return formattedObj;
     }

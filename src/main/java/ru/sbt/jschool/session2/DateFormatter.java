@@ -6,12 +6,14 @@ public class DateFormatter implements Formatting {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
-    public String format(Object object) {
+    public String format(Object object) throws IllegalArgumentException {
         String formattedObj = "-";
         try {
             formattedObj = dateFormat.format(object);
         } catch (IllegalArgumentException e) {
-            //formattedObj = "-";
+            IllegalArgumentException se = new IllegalArgumentException("Format error");
+            se.initCause(e);
+            throw se;
         }
         return formattedObj;
     }
